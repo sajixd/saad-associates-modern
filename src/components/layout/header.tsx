@@ -57,17 +57,12 @@ export default function Header() {
               </div>
               <div className="flex flex-col">
                 <span className={cn(
-                  "font-heading text-lg font-bold leading-tight transition-colors duration-500",
+                  "font-heading text-lg font-bold leading-tight whitespace-nowrap tracking-wide transition-colors duration-500",
                   scrolled ? "text-primary" : "text-white"
                 )}>
-                  Saad & Associates
+                  SAAD & ASSOCIATES
                 </span>
-                <span className={cn(
-                  "text-[10px] font-medium tracking-[0.2em] transition-colors duration-500",
-                  scrolled ? "text-muted" : "text-white/60"
-                )}>
-                  ADVOCATES & CONSULTANTS
-                </span>
+
               </div>
             </Link>
           </div>

@@ -157,7 +157,7 @@ export default function Home() {
         {/* Gold accent line */}
         <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
 
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pt-32 pb-20 lg:px-8 lg:pt-40 lg:pb-28">
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pt-20 pb-20 lg:px-8 lg:pt-32 lg:pb-28">
           <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-20">
             {/* Left Column */}
             <div className="max-w-xl">
