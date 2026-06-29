@@ -15,6 +15,8 @@ import {
   ChevronDown,
   Gavel,
   Landmark,
+  Award,
+  Users,
 } from "lucide-react"
 import { motion } from "framer-motion"
 import { useState } from "react"
@@ -122,93 +124,183 @@ function StarRating() {
   )
 }
 
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 30 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.6, delay, ease: [0.25, 0.1, 0.25, 1] },
+})
+
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
 
   return (
     <div className="flex flex-col">
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary via-primary to-[#0d1f3c] text-white">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(185,148,46,0.08),transparent_50%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(185,148,46,0.05),transparent_50%)]" />
-        <div className="relative mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-36">
-          <div className="grid items-center gap-16 lg:grid-cols-2">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7 }}
-            >
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5">
-                <Clock className="h-3.5 w-3.5 text-accent" />
-                <span className="text-xs font-semibold tracking-wide text-accent">
-                  TRUSTED BY 1,000+ CLIENTS
+
+      {/* ========== HERO ========== */}
+      <section className="relative min-h-screen flex items-center overflow-hidden bg-[#0A0B14]">
+        {/* Base gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0D0F1C] via-[#0A0B14] to-[#06070E]" />
+
+        {/* Gold radial orbs */}
+        <div className="absolute top-[-20%] right-[-10%] h-[600px] w-[600px] rounded-full bg-accent/4 blur-[120px]" />
+        <div className="absolute bottom-[-10%] left-[-5%] h-[400px] w-[400px] rounded-full bg-accent/3 blur-[100px]" />
+
+        {/* Subtle grid overlay */}
+        <div className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `linear-gradient(rgba(201,168,76,1) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,1) 1px, transparent 1px)`,
+            backgroundSize: '80px 80px',
+          }}
+        />
+
+        {/* Gold accent line */}
+        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
+
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pt-32 pb-20 lg:px-8 lg:pt-40 lg:pb-28">
+          <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-20">
+            {/* Left Column */}
+            <div className="max-w-xl">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
+                <div className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-accent/25 bg-accent/[0.07] px-5 py-2 backdrop-blur-sm">
+                  <Award className="h-3.5 w-3.5 text-accent" />
+                  <span className="text-[11px] font-semibold tracking-[0.12em] text-accent/90">
+                    TRUSTED BY 1,000+ CLIENTS
+                  </span>
+                </div>
+              </motion.div>
+
+              <motion.h1
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
+                className="mb-6 text-[clamp(2.5rem,5vw,4.5rem)] font-bold leading-[1.08] tracking-[-0.03em]"
+              >
+                <span className="text-white">Where Legal Rigour Meets</span>
+                <br />
+                <span className="bg-gradient-to-r from-accent to-[#D4B85C] bg-clip-text text-transparent">
+                  Strategic Counsel
                 </span>
-              </div>
-              <h1 className="mb-6 text-4xl font-bold leading-tight tracking-tight lg:text-6xl">
-                Where Legal Rigour Meets
-                <span className="text-accent"> Strategic Counsel</span>
-              </h1>
-              <p className="mb-10 text-lg leading-relaxed text-white/70 lg:text-xl">
+              </motion.h1>
+
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
+                className="mb-10 text-base leading-relaxed text-white/50 lg:text-lg lg:leading-relaxed max-w-lg"
+              >
                 A multi-disciplinary chamber delivering sophisticated legal advocacy, tax optimisation, corporate compliance, and digital forensic defense. Your interests, meticulously protected.
-              </p>
-              <div className="flex flex-col gap-4 sm:flex-row">
+              </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+                className="flex flex-col gap-4 sm:flex-row"
+              >
                 <Link
                   href="/contact"
-                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-8 py-4 text-sm font-semibold text-white shadow-lg shadow-accent/25 transition-all hover:bg-accent/90"
+                  className="group relative inline-flex items-center justify-center gap-2.5 overflow-hidden rounded-lg bg-accent px-8 py-4 text-sm font-semibold text-white shadow-xl shadow-accent/20 transition-all duration-300 hover:shadow-accent/30 hover:brightness-110"
                 >
-                  Schedule a Consultation
-                  <ArrowRight className="h-4 w-4" />
+                  <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                  Schedule Consultation
+                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>
                 <Link
                   href="/services"
-                  className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/20 bg-white/5 px-8 py-4 text-sm font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/10"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/15 bg-white/[0.04] px-8 py-4 text-sm font-semibold text-white/80 backdrop-blur-sm transition-all duration-300 hover:border-white/25 hover:bg-white/[0.08] hover:text-white"
                 >
                   Explore Practice Areas
                 </Link>
-              </div>
-            </motion.div>
+              </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              className="hidden lg:block"
-            >
-              <div className="rounded-2xl border border-white/10 bg-white/[0.06] p-8 backdrop-blur-xl">
-                <div className="mb-6 flex items-center gap-4">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-accent shadow-lg shadow-accent/20">
-                    <Scale className="h-7 w-7 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold">Saad & Associates</h3>
-                    <p className="text-sm text-white/60">Advocates | Tax Advisors | Forensic Consultants</p>
-                  </div>
-                </div>
-                <div className="space-y-4">
-                  {[
-                    "Qualified Tax Advisory & Audit Support",
-                    "24/7 Digital Forensic Response Unit",
-                    "Strict Attorney-Client Privilege",
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-3">
-                      <CheckCircle className="h-5 w-5 flex-shrink-0 text-accent" />
-                      <span className="text-sm text-white/80">{item}</span>
+              {/* Trust markers */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.7 }}
+                className="mt-12 flex items-center gap-6 text-xs text-white/30"
+              >
+                <div className="flex -space-x-2">
+                  {["RM", "PS", "MB", "AD"].map((init, i) => (
+                    <div
+                      key={i}
+                      className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#0A0B14] bg-primary text-[9px] font-bold text-white"
+                    >
+                      {init}
                     </div>
                   ))}
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#0A0B14] bg-accent text-[9px] font-bold text-white">
+                    +
+                  </div>
                 </div>
-                <div className="mt-8 border-t border-white/10 pt-6">
-                  <StarRating />
-                  <p className="mt-2 text-sm text-white/60">
-                    <span className="font-semibold text-white">4.9/5.0</span> — Independently rated by clients
-                  </p>
+                <span>Trusted by corporate leaders &amp; entrepreneurs</span>
+              </motion.div>
+            </div>
+
+            {/* Right Column — Floating Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 40, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.7, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+              className="hidden lg:block"
+            >
+              <div className="animate-float">
+                <div className="relative rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-8 shadow-2xl shadow-black/30 backdrop-blur-2xl">
+                  {/* Subtle inner glow */}
+                  <div className="absolute -inset-0.5 rounded-2xl bg-gradient-to-b from-accent/5 to-transparent opacity-50 blur-sm" />
+
+                  <div className="relative">
+                    <div className="mb-6 flex items-center gap-4">
+                      <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-accent to-[#D4B85C] shadow-lg shadow-accent/20">
+                        <Scale className="h-7 w-7 text-white" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-white">Saad & Associates</h3>
+                        <p className="text-sm text-white/40">Advocates | Tax Advisors | Forensic Consultants</p>
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      {[
+                        { icon: Scale, text: "Qualified Tax Advisory & Audit Support" },
+                        { icon: Shield, text: "24/7 Digital Forensic Response Unit" },
+                        { icon: Users, text: "Strict Attorney-Client Privilege" },
+                      ].map((item, i) => (
+                        <div key={i} className="flex items-center gap-3">
+                          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent/10">
+                            <item.icon className="h-4 w-4 text-accent" />
+                          </div>
+                          <span className="text-sm text-white/70">{item.text}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="mt-8 border-t border-white/[0.06] pt-6">
+                      <div className="flex items-center gap-3 mb-2">
+                        <StarRating />
+                        <span className="text-xs font-medium text-accent">4.9</span>
+                      </div>
+                      <p className="text-xs text-white/30">
+                        <span className="font-semibold text-white/60">4.9 / 5.0</span> — Independently rated by clients
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </motion.div>
           </div>
         </div>
+
+        {/* Bottom fade */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0A0B14] to-transparent" />
       </section>
 
-      {/* Stats */}
+      {/* ========== STATS ========== */}
       <section className="border-b border-gray-100 bg-white">
         <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
           <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
@@ -229,7 +321,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Services */}
+      {/* ========== SERVICES ========== */}
       <section className="bg-secondary py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <motion.div
@@ -277,7 +369,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Emergency Banner */}
+      {/* ========== EMERGENCY BANNER ========== */}
       <section className="bg-white py-16">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <motion.div
@@ -318,7 +410,7 @@ export default function Home() {
                   href="tel:+919563712462"
                   className="inline-flex items-center justify-center gap-2 rounded-lg bg-crisis px-8 py-4 text-sm font-semibold text-white shadow-lg shadow-crisis/25 transition-all hover:bg-crisis/90"
                 >
-                  <Phone className="h-4 w-4" />
+                  <Phone className="h-4 h-4" />
                   +91 9563712462 — Emergency Hotline
                 </a>
                 <Link
@@ -326,7 +418,7 @@ export default function Home() {
                   className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-8 py-4 text-sm font-semibold text-primary transition-all hover:bg-gray-50"
                 >
                   View Response Protocol
-                  <ArrowRight className="h-4 w-4" />
+                  <ArrowRight className="h-5 w-5" />
                 </Link>
               </div>
             </div>
@@ -334,7 +426,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Why Choose Us */}
+      {/* ========== WHY CHOOSE US ========== */}
       <section className="bg-secondary py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="grid items-center gap-16 lg:grid-cols-2">
@@ -407,7 +499,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials */}
+      {/* ========== TESTIMONIALS ========== */}
       <section className="bg-white py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <motion.div
@@ -454,7 +546,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FAQ */}
+      {/* ========== FAQ ========== */}
       <section className="bg-secondary py-24">
         <div className="mx-auto max-w-3xl px-6 lg:px-8">
           <motion.div
@@ -508,7 +600,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* ========== CTA ========== */}
       <section className="bg-primary py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <motion.div

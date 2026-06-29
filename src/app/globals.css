@@ -2,20 +2,22 @@
 
 @theme {
   --color-background: #ffffff;
-  --color-foreground: #0f172a;
-  --color-primary: #0f172a;
+  --color-foreground: #0D0F1C;
+  --color-primary: #0D0F1C;
   --color-primary-foreground: #ffffff;
   --color-secondary: #f8fafc;
-  --color-secondary-foreground: #0f172a;
-  --color-accent: #b8942e;
+  --color-secondary-foreground: #0D0F1C;
+  --color-accent: #C9A84C;
   --color-accent-foreground: #ffffff;
   --color-muted: #64748b;
   --color-muted-foreground: #94a3b8;
   --color-border: #e2e8f0;
   --color-input: #e2e8f0;
-  --color-ring: #b8942e;
+  --color-ring: #C9A84C;
   --color-crisis: #dc2626;
   --color-crisis-foreground: #ffffff;
+  --color-accent-light: rgba(201, 168, 76, 0.08);
+  --color-accent-muted: rgba(201, 168, 76, 0.15);
 }
 
 * {
@@ -36,24 +38,28 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 ::selection {
-  background-color: #b8942e;
-  color: #ffffff;
+  background-color: #C9A84C;
+  color: #0D0F1C;
 }
 
 @keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fade-in {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(201, 168, 76, 0.1); }
+  50% { box-shadow: 0 0 40px rgba(201, 168, 76, 0.2); }
 }
 
 .animate-fade-in-up {
@@ -62,4 +68,12 @@ h1, h2, h3, h4, h5, h6 {
 
 .animate-fade-in {
   animation: fade-in 0.6s ease-out forwards;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
 }
