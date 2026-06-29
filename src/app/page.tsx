@@ -1,65 +1,546 @@
-import Image from "next/image";
+"use client"
+
+import Link from "next/link"
+import {
+  ArrowRight,
+  Shield,
+  Scale,
+  FileText,
+  Building2,
+  Calculator,
+  CheckCircle,
+  Star,
+  Clock,
+  Phone,
+  ChevronDown,
+  Gavel,
+  Landmark,
+} from "lucide-react"
+import { motion } from "framer-motion"
+import { useState } from "react"
+
+const services = [
+  {
+    icon: Gavel,
+    title: "Legal Advocacy",
+    description: "Strategic representation across civil litigation, criminal defense, property disputes, and corporate law with meticulous case preparation.",
+    href: "/services#legal",
+  },
+  {
+    icon: Calculator,
+    title: "Tax & GST Compliance",
+    description: "Comprehensive tax planning, GST registration and filing, income tax returns, and audit defense to ensure full regulatory adherence.",
+    href: "/services#tax",
+  },
+  {
+    icon: Landmark,
+    title: "Business Incorporation",
+    description: "End-to-end company formation including Pvt Ltd, LLP, OPC, and partnership registration with complete startup compliance setup.",
+    href: "/services#incorporation",
+  },
+  {
+    icon: FileText,
+    title: "Accounting & Bookkeeping",
+    description: "Professional financial management spanning monthly reconciliations, payroll administration, and tailored management reporting.",
+    href: "/services#accounting",
+  },
+  {
+    icon: CheckCircle,
+    title: "Regulatory Compliance",
+    description: "Complete compliance management covering PF/ESI, trademark registration, FSSAI licensing, ROC filings, and ISO certification.",
+    href: "/services#compliance",
+  },
+  {
+    icon: Shield,
+    title: "Cyber Threat Defense",
+    description: "24/7 emergency response for ransomware, financial fraud, online extortion, and identity theft with forensic investigation protocols.",
+    href: "/cyber-defense",
+  },
+]
+
+const stats = [
+  { value: "500+", label: "Matters Resolved" },
+  { value: "8+", label: "Years of Practice" },
+  { value: "1,000+", label: "Clients Represented" },
+  { value: "24/7", label: "Crisis Response" },
+]
+
+const testimonials = [
+  {
+    name: "Rajesh Malhotra",
+    role: "CEO, Malhotra Exports",
+    content:
+      "Their counsel on LLP formation and cross-border tax implications was instrumental in launching our export venture. Thorough, precise, and commercially astute.",
+    initials: "RM",
+  },
+  {
+    name: "Priya Sharma",
+    role: "Entrepreneur",
+    content:
+      "After a sophisticated phishing attack compromised our business accounts, their cyber response team contained the breach within hours and coordinated fund recovery.",
+    initials: "PS",
+  },
+  {
+    name: "Mohit Bansal",
+    role: "Partner, MB Audits",
+    content:
+      "Their corporate advisory team operates as a seamless extension of our firm. Complex GST reconciliations and annual filings handled with absolute precision.",
+    initials: "MB",
+  },
+]
+
+const faqs = [
+  {
+    q: "What jurisdictions does your chamber practice in?",
+    a: "We practice across civil and criminal courts in West Bengal, with particular concentration in Asansol, Durgapur, and Bardhaman jurisdictions. For corporate and tax matters, we represent clients nationwide through our network of affiliated counsel.",
+  },
+  {
+    q: "How quickly can you respond to a cyber incident?",
+    a: "Our Priority Response Unit mobilises within 30 minutes of an emergency call. We operate a dedicated 24/7 hotline staffed by forensic specialists who initiate evidence preservation, account freeze protocols, and legal documentation simultaneously.",
+  },
+  {
+    q: "What is the typical timeline for company registration?",
+    a: "Private Limited incorporation generally completes within 10-15 working days, LLPs within 7-10 days, and OPC registrations within 8-12 business days, subject to MCA processing times and document accuracy.",
+  },
+  {
+    q: "Do you offer initial consultation at no charge?",
+    a: "Yes, preliminary consultations are complimentary. During this meeting we assess your requirements, outline the legal framework, and provide a transparent fee structure with no obligation to proceed.",
+  },
+  {
+    q: "Can you assist with recovering funds lost to online fraud?",
+    a: "Time is critical. We immediately coordinate with banking institutions to freeze beneficiary accounts, file formal complaints with cyber crime cells, and initiate legal proceedings. Success rates are significantly higher when contacted within the first 24 hours.",
+  },
+]
+
+function StarRating() {
+  return (
+    <div className="flex gap-1">
+      {[...Array(5)].map((_, i) => (
+        <Star key={i} className="h-4 w-4 fill-accent text-accent" />
+      ))}
+    </div>
+  )
+}
 
 export default function Home() {
+  const [openFaq, setOpenFaq] = useState<number | null>(null)
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div className="flex flex-col">
+      {/* Hero */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-primary via-primary to-[#0d1f3c] text-white">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(185,148,46,0.08),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(185,148,46,0.05),transparent_50%)]" />
+        <div className="relative mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-36">
+          <div className="grid items-center gap-16 lg:grid-cols-2">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5">
+                <Clock className="h-3.5 w-3.5 text-accent" />
+                <span className="text-xs font-semibold tracking-wide text-accent">
+                  TRUSTED BY 1,000+ CLIENTS
+                </span>
+              </div>
+              <h1 className="mb-6 text-4xl font-bold leading-tight tracking-tight lg:text-6xl">
+                Where Legal Rigour Meets
+                <span className="text-accent"> Strategic Counsel</span>
+              </h1>
+              <p className="mb-10 text-lg leading-relaxed text-white/70 lg:text-xl">
+                A multi-disciplinary chamber delivering sophisticated legal advocacy, tax optimisation, corporate compliance, and digital forensic defense. Your interests, meticulously protected.
+              </p>
+              <div className="flex flex-col gap-4 sm:flex-row">
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-8 py-4 text-sm font-semibold text-white shadow-lg shadow-accent/25 transition-all hover:bg-accent/90"
+                >
+                  Schedule a Consultation
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link
+                  href="/services"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/20 bg-white/5 px-8 py-4 text-sm font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/10"
+                >
+                  Explore Practice Areas
+                </Link>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="hidden lg:block"
             >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              <div className="rounded-2xl border border-white/10 bg-white/[0.06] p-8 backdrop-blur-xl">
+                <div className="mb-6 flex items-center gap-4">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-accent shadow-lg shadow-accent/20">
+                    <Scale className="h-7 w-7 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold">Saad & Associates</h3>
+                    <p className="text-sm text-white/60">Advocates | Tax Advisors | Forensic Consultants</p>
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  {[
+                    "Qualified Tax Advisory & Audit Support",
+                    "24/7 Digital Forensic Response Unit",
+                    "Strict Attorney-Client Privilege",
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-3">
+                      <CheckCircle className="h-5 w-5 flex-shrink-0 text-accent" />
+                      <span className="text-sm text-white/80">{item}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-8 border-t border-white/10 pt-6">
+                  <StarRating />
+                  <p className="mt-2 text-sm text-white/60">
+                    <span className="font-semibold text-white">4.9/5.0</span> — Independently rated by clients
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Stats */}
+      <section className="border-b border-gray-100 bg-white">
+        <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
+          <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
+            {stats.map((stat, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="text-center"
+              >
+                <div className="mb-1 font-heading text-4xl font-bold text-primary">{stat.value}</div>
+                <div className="text-sm text-muted-foreground">{stat.label}</div>
+              </motion.div>
+            ))}
+          </div>
         </div>
-      </main>
+      </section>
+
+      {/* Services */}
+      <section className="bg-secondary py-24">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-16 text-center"
+          >
+            <span className="mb-4 inline-block text-xs font-semibold uppercase tracking-[0.15em] text-accent">
+              Practice Areas
+            </span>
+            <h2 className="mb-4 font-heading text-3xl font-bold text-primary lg:text-4xl">
+              Comprehensive Legal & Corporate Solutions
+            </h2>
+            <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
+              Expert counsel across six core practice verticals, serving businesses, professionals, and individuals with precision and integrity.
+            </p>
+          </motion.div>
+
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {services.map((service, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <Link href={service.href} className="group block h-full">
+                  <div className="flex h-full flex-col rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition-all duration-300 group-hover:shadow-lg group-hover:-translate-y-1">
+                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/5 text-primary transition-colors group-hover:bg-accent group-hover:text-white">
+                      <service.icon className="h-6 w-6" />
+                    </div>
+                    <h3 className="mb-3 font-heading text-xl font-bold text-primary">{service.title}</h3>
+                    <p className="mb-6 flex-1 text-sm leading-relaxed text-muted-foreground">{service.description}</p>
+                    <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent">
+                      Learn More
+                      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                    </span>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Emergency Banner */}
+      <section className="bg-white py-16">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="rounded-2xl border border-red-100 bg-gradient-to-br from-red-50 to-orange-50 p-8 lg:p-12"
+          >
+            <div className="grid items-center gap-8 lg:grid-cols-2">
+              <div>
+                <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-red-100 px-4 py-1.5">
+                  <Shield className="h-3.5 w-3.5 text-red-600" />
+                  <span className="text-xs font-bold tracking-wide text-red-700">PRIORITY RESPONSE UNIT</span>
+                </div>
+                <h2 className="mb-4 font-heading text-2xl font-bold text-primary lg:text-3xl">
+                  Active Cyber Threat or Digital Fraud?
+                </h2>
+                <p className="mb-6 leading-relaxed text-muted-foreground">
+                  Every moment counts. Our forensic team provides immediate containment, evidence preservation, and legal escalation for ransomware attacks, financial scams, identity theft, and online extortion.
+                </p>
+                <div className="mb-6 flex gap-8">
+                  <div>
+                    <div className="font-heading text-2xl font-bold text-crisis">&lt; 30 min</div>
+                    <div className="text-xs text-muted-foreground">Average Response</div>
+                  </div>
+                  <div>
+                    <div className="font-heading text-2xl font-bold text-crisis">94%</div>
+                    <div className="text-xs text-muted-foreground">Recovery Rate</div>
+                  </div>
+                  <div>
+                    <div className="font-heading text-2xl font-bold text-crisis">500+</div>
+                    <div className="text-xs text-muted-foreground">Threats Neutralised</div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col gap-4">
+                <a
+                  href="tel:+919563712462"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-crisis px-8 py-4 text-sm font-semibold text-white shadow-lg shadow-crisis/25 transition-all hover:bg-crisis/90"
+                >
+                  <Phone className="h-4 w-4" />
+                  +91 9563712462 — Emergency Hotline
+                </a>
+                <Link
+                  href="/cyber-defense"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-8 py-4 text-sm font-semibold text-primary transition-all hover:bg-gray-50"
+                >
+                  View Response Protocol
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Why Choose Us */}
+      <section className="bg-secondary py-24">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="grid items-center gap-16 lg:grid-cols-2">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <span className="mb-4 inline-block text-xs font-semibold uppercase tracking-[0.15em] text-accent">
+                Why engage us
+              </span>
+              <h2 className="mb-6 font-heading text-3xl font-bold text-primary lg:text-4xl">
+                Rigorous Preparation. Uncompromising Standards.
+              </h2>
+              <p className="mb-8 leading-relaxed text-muted-foreground">
+                We combine deep legal expertise with financial acumen and forensic capability to deliver outcomes that withstand scrutiny. Every engagement benefits from structured methodology and personalised attention.
+              </p>
+
+              <div className="space-y-6">
+                {[
+                  {
+                    title: "Experienced Leadership",
+                    desc: "Over eight years of practice handling complex commercial litigation, tax audits, and cyber crime investigations.",
+                  },
+                  {
+                    title: "Integrated Approach",
+                    desc: "Seamless coordination between legal, tax, and forensic verticals eliminates silos and accelerates resolutions.",
+                  },
+                  {
+                    title: "Transparent Engagement",
+                    desc: "Milestone-based fee structures with no hidden charges. Initial consultations are always complimentary.",
+                  },
+                  {
+                    title: "Client-First Ethics",
+                    desc: "Every case receives a dedicated principal advisor who maintains direct accountability and accessibility.",
+                  },
+                ].map((item, i) => (
+                  <div key={i} className="flex gap-4">
+                    <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-accent/10">
+                      <CheckCircle className="h-3.5 w-3.5 text-accent" />
+                    </div>
+                    <div>
+                      <h3 className="font-heading font-bold text-primary">{item.title}</h3>
+                      <p className="text-sm text-muted-foreground">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="rounded-2xl bg-white p-8 shadow-lg"
+            >
+              <StarRating />
+              <p className="mt-3 font-heading text-3xl font-bold text-primary">4.9 / 5.0</p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Rated by entrepreneurs, corporate leaders, and individuals we have represented.
+              </p>
+              <div className="mt-6 border-t border-gray-100 pt-6">
+                <p className="italic leading-relaxed text-muted-foreground">
+                  &ldquo;The speed with which Adv. Saad&apos;s team contained a sophisticated ransomware attack on our servers and coordinated with law enforcement was remarkable. They transformed a crisis into a managed resolution.&rdquo;
+                </p>
+                <p className="mt-3 text-sm font-bold text-primary">— Amit Deshmukh, Tech Horizon</p>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="bg-white py-24">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-16 text-center"
+          >
+            <span className="mb-4 inline-block text-xs font-semibold uppercase tracking-[0.15em] text-accent">
+              Client Voices
+            </span>
+            <h2 className="mb-4 font-heading text-3xl font-bold text-primary lg:text-4xl">
+              What Our Clients Say
+            </h2>
+            <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
+              Real outcomes from matters we have handled across litigation, compliance, and crisis response.
+            </p>
+          </motion.div>
+
+          <div className="grid gap-8 md:grid-cols-3">
+            {testimonials.map((t, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="rounded-xl bg-secondary p-6"
+              >
+                <StarRating />
+                <p className="mt-4 leading-relaxed text-muted-foreground">&ldquo;{t.content}&rdquo;</p>
+                <div className="mt-6 flex items-center gap-3 border-t border-gray-200/50 pt-4">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">
+                    {t.initials}
+                  </div>
+                  <div>
+                    <div className="text-sm font-bold text-primary">{t.name}</div>
+                    <div className="text-xs text-muted-foreground">{t.role}</div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="bg-secondary py-24">
+        <div className="mx-auto max-w-3xl px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-16 text-center"
+          >
+            <span className="mb-4 inline-block text-xs font-semibold uppercase tracking-[0.15em] text-accent">
+              Clarifications
+            </span>
+            <h2 className="mb-4 font-heading text-3xl font-bold text-primary lg:text-4xl">
+              Frequently Asked Questions
+            </h2>
+          </motion.div>
+
+          <div className="space-y-3">
+            {faqs.map((faq, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.05 }}
+                className="rounded-xl border border-gray-100 bg-white overflow-hidden"
+              >
+                <button
+                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                  className="flex w-full items-center justify-between px-6 py-5 text-left transition-colors hover:bg-gray-50/50"
+                  aria-expanded={openFaq === index}
+                >
+                  <span className="pr-4 font-heading font-bold text-primary">{faq.q}</span>
+                  <ChevronDown
+                    className={`h-4 w-4 flex-shrink-0 text-muted-foreground transition-transform duration-200 ${
+                      openFaq === index ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+                <div
+                  className={`overflow-hidden transition-all duration-300 ${
+                    openFaq === index ? "max-h-96" : "max-h-0"
+                  }`}
+                >
+                  <div className="border-t border-gray-100 px-6 py-4">
+                    <p className="text-sm leading-relaxed text-muted-foreground">{faq.a}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="bg-primary py-24">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center"
+          >
+            <h2 className="mb-4 font-heading text-3xl font-bold text-white lg:text-4xl">
+              Ready to Secure Your Position?
+            </h2>
+            <p className="mx-auto mb-10 max-w-2xl text-lg text-white/70">
+              Speak directly with senior counsel. Initial consultations are complimentary, with clear fee structures and no pressure to proceed.
+            </p>
+            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-8 py-4 text-sm font-semibold text-white shadow-lg shadow-accent/25 transition-all hover:bg-accent/90"
+              >
+                Schedule Consultation
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                href="/about"
+                className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/20 bg-white/5 px-8 py-4 text-sm font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/10"
+              >
+                Meet the Team
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </section>
     </div>
-  );
+  )
 }
